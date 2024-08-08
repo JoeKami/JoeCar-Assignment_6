@@ -30,9 +30,9 @@ public class YearlyReport {
 
     @Override
     public String toString() {
-        return "YearlyReport{" +
-                "date=" + date +
-                ", sale=" + sale +
+        return "YearlyReport {" +
+                "date = " + date +
+                ", sale = " + sale +
                 '}';
     }
 }
