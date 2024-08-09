@@ -21,4 +21,14 @@ public class FileService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public Optional<YearlyReport> findBestMonth (List<YearlyReport> yearlyReports) {
+        return yearlyReports.stream()
+                .max(Comparator.comparingInt(YearlyReport::getSale));
+    }
+
+    public Optional<YearlyReport> findWorstMonth (List<YearlyReport> yearlyReports) {
+        return yearlyReports.stream()
+                .min(Comparator.comparingInt(YearlyReport::getSale));
+    }
 }
