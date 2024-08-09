@@ -7,19 +7,22 @@ import java.nio.file.*;
 import java.time.*;
 import java.io.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileService {
 
     public List<YearlyReport> readYearlyReport (String filename) throws IOException {
-        return Files.lines(Paths.get(filename))
+       try(Stream<String> lines = Files.lines(Paths.get(filename))) {
+           return lines
                 .skip(1)
-                .map(line -> {
-                    String[] parts = line.split(",");
-                    YearMonth date = YearMonth.parse(parts[0], DateTimeFormatter.ofPattern("MMM-yy"));
-                    Integer sales = Integer.parseInt(parts[1]);
-                    return new YearlyReport(date, sales);
-                })
-                .collect(Collectors.toList());
+                   .map(line -> {
+                       String[] parts = line.split(",");
+                       YearMonth date = YearMonth.parse(parts[0], DateTimeFormatter.ofPattern("MMM-yy"));
+                       Integer sales = Integer.parseInt(parts[1]);
+                       return new YearlyReport(date, sales);
+                   })
+                   .collect(Collectors.toList());
+       }
     }
 
     public Optional<YearlyReport> findBestMonth (List<YearlyReport> yearlyReports) {

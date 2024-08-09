@@ -1,7 +1,6 @@
 package com.coderscampus.assignment6;
 
 import java.io.IOException;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,6 +9,7 @@ public class YearlyReportAnalysisApplication {
     public static void main(String[] args) throws IOException {
 
         FileService fileService = new FileService();
+
         //Model 3 report
         System.out.println();
         System.out.println("Model 3 Yearly Sales Report");
@@ -24,9 +24,9 @@ public class YearlyReportAnalysisApplication {
                 ));
 
         totalYearlySales.forEach((year, sales) -> System.out.println(year + "->" + sales));
-//        System.out.println(totalYearlySales);
         System.out.println();
-        System.out.println(fileService.findBestMonth(model3Sales));
+        fileService.findBestMonth(model3Sales).ifPresent(report -> System.out.println("The best month for Model 3 was: " + report.getDate()));
+        fileService.findWorstMonth(model3Sales).ifPresent(report -> System.out.println("The worst month for Model 3 was: " + report.getDate()));
 
         //Model S report
         System.out.println();
@@ -42,9 +42,9 @@ public class YearlyReportAnalysisApplication {
                 ));
 
         totalYearlySales2.forEach((year, sales) -> System.out.println(year + "->" + sales));
-//        System.out.println(totalYearlySales2);
         System.out.println();
-        System.out.println(fileService.findBestMonth(modelSSales));
+        fileService.findBestMonth(modelSSales).ifPresent(report -> System.out.println("The best month for Model S was: " + report.getDate()));
+        fileService.findWorstMonth(model3Sales).ifPresent(report -> System.out.println("The worst month for Model S was: " + report.getDate()));
 
 
         //Model X report
@@ -60,12 +60,11 @@ public class YearlyReportAnalysisApplication {
                         Collectors.summingInt(YearlyReport::getSale)
                 ));
 
-        totalYearlySales3.forEach((year, sales) -> System.out.println(year + "->" + sales));
-//        System.out.println(totalYearlySales3);
+        totalYearlySales3.forEach((year, sales) -> System.out.println(year + " -> " + sales));
 
         System.out.println();
-        System.out.println(fileService.findBestMonth(modelXSales));
-
+        fileService.findBestMonth(modelXSales).ifPresent(report -> System.out.println("The best month for Model X was: " + report.getDate()));
+        fileService.findWorstMonth(modelXSales).ifPresent(report -> System.out.println("The worst month for Model X was: " + report.getDate()));
 
     }
 }
